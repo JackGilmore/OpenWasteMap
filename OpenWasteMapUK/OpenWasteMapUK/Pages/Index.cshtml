@@ -99,15 +99,13 @@
 
 
                     $.ajax({
-                        url: "https://ons-inspire.esriuk.com/arcgis/rest/services/Administrative_Boundaries/Local_Authority_Districts_December_2019_Boundaries_UK_BFC/MapServer/0/query",
-                        data: {
-                            where: `lad19cd = '${data.councilCode}'`,
-                            outSR: "4326",
-                            f: "json"
-                        }
+                        url: `/assets/geo/local-authorities/${data.councilCode}.geojson`
                     }).done(function (councilData) {
-                        var coords = L.GeoJSON.coordsToLatLngs(councilData.features[0].geometry.rings, 1);
-                        councilLayer = L.polygon(coords, { color: 'green' }).addTo(map);
+                        councilLayer = new L.GeoJSON(councilData,
+                            {
+                                style: { color: 'green', opacity: 0.5 }
+                            }).addTo(map);
+
                         map.flyToBounds(councilLayer.getBounds(),
                             {
                                 animate: true
