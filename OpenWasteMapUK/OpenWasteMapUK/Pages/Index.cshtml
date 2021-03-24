@@ -2,8 +2,8 @@
 @using OpenWasteMapUK.Models
 @model IndexModel
 @{
-    Layout = "Shared/_MapLayout";
-    ViewData["Title"] = "Home page";
+    Layout = "_MapLayout";
+    ViewData["Title"] = "Map";
 }
 
 @section sidebar{
@@ -13,10 +13,6 @@
                 <label for="searchPostcode">Postcode:</label>
                 <input type="text" autocomplete="postal-code" class="form-control" id="searchPostcode" />
             </div>
-            @*<div class="form-group mb-3">
-                    <label for="searchWaste">Waste:</label>
-                    <input type="text" class="form-control" id="searchWaste" />
-                </div>*@
             <div class="form-group mb-3">
                 <label for="searchWaste">Waste:</label>
                 <select class="custom-select" id="searchWaste">
@@ -24,7 +20,7 @@
 
                     @foreach (var opt in TagMappings.Values.Select(x => x.Key).OrderBy(x => x))
                     {
-                    <option>@opt</option>
+                        <option>@opt</option>
                     }
                 </select>
             </div>
@@ -180,8 +176,9 @@
                             var popupData;
 
 
+
                             // Centre title
-                            popupData = "<h6>" + centreProps.name + "</h6>";
+                            popupData = `<h6>${centreProps.name}</h6>`;
 
                             // Centre address
                             var addressContent = [];
@@ -210,8 +207,14 @@
                             popupData += addressContent.join(", ")
                             popupData += "</em>";
 
-                            if (centreProps["website"]) {
-                                popupData += "<div><a href=\"" + centreProps["website"] + "\">Website</a></div>"
+                            // OSM link
+                            var type = data[i].type;
+                            var id = data[i].id;
+                            var osmLink = `https://openstreetmap.org/${type}/${id}`;
+                            popupData += `<div><a href="${osmLink}" target="_blank"><i class="fas fa-globe"></i> OpenStreetMap</a></div>`;
+
+                            if (centreProps.website) {
+                                popupData += `<div><a href="${centreProps.website}}" target="_blank"><i class="fas fa-link"></i> Website</a></div>`;
                             }
 
                             // Accordion wrapper begin
@@ -348,14 +351,14 @@
             var lat = $("#suggestLat").val();
             var lng = $("#suggestLng").val();
             $.ajax({
-                    url: "/api/SuggestChange",
-                    data: {
-                        hwrcName,
-                        hwrcText,
-                        lat,
-                        lng
-                    }
+                url: "/api/SuggestChange",
+                data: {
+                    hwrcName,
+                    hwrcText,
+                    lat,
+                    lng
                 }
+            }
             );
         }
 

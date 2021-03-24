@@ -1,0 +1,44 @@
+﻿@{
+    ViewData["AppTitle"] = "OpenWasteMap";
+}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>@ViewData["AppTitle"] - @ViewData["Title"]</title>
+
+    <link href="/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/lib/fontawesome/css/all.min.css" rel="stylesheet" />
+    <link href="/css/site.css" rel="stylesheet">
+
+    @await RenderSectionAsync("parentHead", false)
+</head>
+
+<body>
+    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 flex-row">
+        <a class="navbar-brand col-sm-3 col-md-2 mr-0" asp-page="Index">OpenWasteMap</a>
+        <ul class="navbar-nav ml-2 mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" asp-page="Index">Map</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-page="About">About</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Share data</a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="container-fluid" id="main-container">
+        @RenderBody()
+    </div>
+
+    <script src="/lib/jquery/dist/jquery.min.js"></script>
+    <script src="/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    @await RenderSectionAsync("parentScripts", false)
+</body>
+</html>
+

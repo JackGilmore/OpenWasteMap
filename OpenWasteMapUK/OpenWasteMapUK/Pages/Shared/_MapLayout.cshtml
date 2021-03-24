@@ -1,61 +1,30 @@
-﻿<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+﻿@{
+    Layout = "_Main";
+}
 
-    <title>@ViewData["Title"]</title>
-    
-    <link href="/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+@section parentHead {
     <link href="/lib/leaflet/leaflet.min.css" rel="stylesheet" />
-    <link href="/css/site.css" rel="stylesheet">
-    <link href="lib/select2/css/select2.min.css" rel="stylesheet" />
-    <link href="lib/ttskch/select2-bootstrap4-theme/dist/select2-bootstrap4.min.css" rel="stylesheet" />
-    <link href="/lib/fontawesome/css/all.min.css" rel="stylesheet" />
+    <link href="/lib/select2/css/select2.min.css" rel="stylesheet" />
+    <link href="/lib/ttskch/select2-bootstrap4-theme/dist/select2-bootstrap4.min.css" rel="stylesheet" />
+    @await RenderSectionAsync("head",false)
+}
 
-</head>
 
-<body>
-    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 flex-row">
-        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">OpenWasteMap</a>
-        <ul class="navbar-nav ml-2 mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" asp-page="Index">Map</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">About</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Share data</a>
-            </li>
-        </ul>
+<div class="row" id="main-row">
+    <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+        <div class="sidebar-sticky">
+            @await RenderSectionAsync("sidebar", false)
+        </div>
     </nav>
 
-    <div class="container-fluid" id="main-container">
-        <div class="row" id="main-row">
-            <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-                <div class="sidebar-sticky">
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 p-0">
+        @RenderBody()
+    </main>
+</div>
 
-                    @await RenderSectionAsync("sidebar", false)
-                </div>
-            </nav>
-
-            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 p-0">
-                @RenderBody()
-            </main>
-        </div>
-    </div>
-
-    <script src="/lib/jquery/dist/jquery.min.js"></script>
-    <script src="/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+@section parentScripts
+{
     <script src="/lib/leaflet/leaflet.min.js"></script>
-    <script src="lib/select2/js/select2.full.min.js"></script>
-
-
-    @await RenderSectionAsync("scripts", false)
-
-</body>
-</html>
-
+    <script src="/lib/select2/js/select2.full.min.js"></script>
+    @await RenderSectionAsync("scripts")
+}
