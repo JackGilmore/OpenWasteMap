@@ -89,7 +89,7 @@
                     waste: waste
                 },
                 success: function (data) {
-                    var resultText = `<p>Your council area is <strong>${data.councilArea}</strong></p>`;
+                    var resultText = `<p>Your local authority area is <strong>${data.councilArea}</strong></p>`;
 
                     if (data.wasteOSMTag == null) {
                         resultText += `<p class="text-danger">Sorry. We don't recognise this waste type at the moment. If you know any recycling centres that take this waste type. Please <a href="#">tell us here</a>.</p>`;
@@ -97,7 +97,7 @@
                         resultText += `<p>You can dispose of ${sanitize(waste.toLowerCase())} at the following locations:</p>`;
                     }
 
-
+      
                     $.ajax({
                         url: `/assets/geo/local-authorities/${data.councilCode}.geojson`
                     }).done(function (councilData) {

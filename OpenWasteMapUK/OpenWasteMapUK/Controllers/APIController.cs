@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using GeoJSON.Net.Feature;
@@ -34,9 +35,23 @@ namespace OpenWasteMapUK.Controllers
                 return BadRequest((postcodeData["error"] ?? "Unknown error occurred").Value<string>());
             }
 
-            var councilArea = (postcodeData["result"]?["admin_district"] ?? "Unknown").Value<string>();
-            var councilCode = (postcodeData["result"]?["codes"]?["admin_district"] ?? "Unknown").Value<string>();
+            string councilArea;
+            string councilCode;
+
+            //var councilArea = (postcodeData["result"]?["admin_district"] ?? "Unknown").Value<string>();
+            //var councilCode = (postcodeData["result"]?["codes"]?["admin_district"] ?? "Unknown").Value<string>();
             var country = (postcodeData["result"]?["country"] ?? "Unknown").Value<string>();
+
+            if (country.Equals("England",StringComparison.CurrentCultureIgnoreCase))
+            {
+                councilArea = (postcodeData["result"]?["admin_county"] ?? "Unknown").Value<string>();
+                councilCode = (postcodeData["result"]?["codes"]?["admin_county"] ?? "Unknown").Value<string>();
+            }
+            else
+            {
+                councilArea = (postcodeData["result"]?["admin_district"] ?? "Unknown").Value<string>();
+                councilCode = (postcodeData["result"]?["codes"]?["admin_district"] ?? "Unknown").Value<string>();
+            }
 
             var wasteOSMTag = TagMappings.Values.GetValueOrDefault(waste, null);
 
