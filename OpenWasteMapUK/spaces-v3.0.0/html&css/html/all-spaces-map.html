@@ -1,0 +1,387 @@
+<!--
+
+=========================================================
+* Spaces - Bootstrap Directory Listing Template
+=========================================================
+
+* Product Page: https://themesberg.com/product/bootstrap-themes/spaces-bootstrap-directory-listing-template
+* Copyright 2020 Themesberg EULA (https://www.themesberg.com/licensing)
+
+* Coded by https://themesberg.com
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- Primary Meta Tags -->
+<title>Spaces - All items with map view</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="title" content="Spaces - All items with map view">
+<meta name="author" content="Themesberg">
+<meta name="description" content="Premium Directory Listing Bootstrap 4 Template featuring 37 hand-crafted pages, a dashboard an Mapbox integration. Spaces also comes with a complete UI Kit featuring over 700 components by Themesberg.">
+<meta name="keywords" content="bootstrap, bootstrap 4 template, directory listing bootstrap, bootstrap 4 listing, bootstrap listing, bootstrap 4 directory listing template, vector map, leaflet js template, mapbox theme, mapbox template, dashboard, themesberg, user dashboard bootstrap, dashboard bootstrap, ui kit, bootstrap ui kit, premium bootstrap theme" />
+<link rel="canonical" href="https://themesberg.s3.us-east-2.amazonaws.com/public/products/spaces/thumbnail.jpg">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://demo.themesberg.com/pixel-pro">
+<meta property="og:title" content="Spaces - All items with map view">
+<meta property="og:description" content="Premium Directory Listing Bootstrap 4 Template featuring 37 hand-crafted pages, a dashboard an Mapbox integration. Spaces also comes with a complete UI Kit featuring over 700 components by Themesberg.">
+<meta property="og:image" content="https://themesberg.s3.us-east-2.amazonaws.com/public/products/spaces/thumbnail.jpg">
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://demo.themesberg.com/pixel-pro">
+<meta property="twitter:title" content="Spaces - All items with map view">
+<meta property="twitter:description" content="Premium Directory Listing Bootstrap 4 Template featuring 37 hand-crafted pages, a dashboard an Mapbox integration. Spaces also comes with a complete UI Kit featuring over 700 components by Themesberg.">
+<meta property="twitter:image" content="https://themesberg.s3.us-east-2.amazonaws.com/public/products/spaces/thumbnail.jpg">
+
+<!-- Favicon -->
+<link rel="apple-touch-icon" sizes="120x120" href="../assets/img/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon/favicon-16x16.png">
+<link rel="manifest" href="../assets/img/favicon/site.webmanifest">
+<link rel="mask-icon" href="../assets/img/favicon/safari-pinned-tab.svg" color="#ffffff">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="theme-color" content="#ffffff">
+
+<!-- Fontawesome -->
+<link type="text/css" href="../vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+
+<!-- Leaflet JS -->
+<link type="text/css" href="../vendor/leaflet/dist/leaflet.css" rel="stylesheet">
+
+<!-- Fancybox -->
+<link rel="stylesheet" href="../vendor/@fancyapps/fancybox/dist/jquery.fancybox.min.css">
+
+<!-- VectorMap -->
+<link rel="stylesheet" href="../vendor/jqvmap/dist/jqvmap.min.css">
+
+<!-- Main CSS -->
+<link type="text/css" href="../css/spaces.css" rel="stylesheet">
+
+<!-- NOTICE: You can use the _analytics.html partial to include production code specific code & trackers -->
+
+</head>
+
+<body>
+    <main>
+
+        <div class="preloader bg-dark flex-column justify-content-center align-items-center">
+    <div class="position-relative">
+        <img src="../assets/img/brand/light-without-letter.svg" alt="Logo loader">
+        <img src="../assets/img/brand/letter.svg" class="rotate-letter" alt="Letter loader">
+    </div>
+</div>
+       
+        <div class="section section-header py-0 position-relative">
+            <a class="navbar-brand pt-4 mx-2 mx-lg-6 logo-map" href="../index.html">
+                <img class="navbar-brand-light" src="../assets/img/brand/dark.svg" height="30" alt="Logo dark">
+            </a>
+            <div class="search-map">
+                <div class="card border-light p-md-2 mx-3 mx-xl-6">
+                    <div class="card-body p-4">
+                        <form autocomplete="off" method="get" action="#">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group form-group-lg mb-lg-0">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><span class="fas fa-map-marker-alt"></span></span>
+                                                    </div>
+                                                    <input id="search-location" type="text" class="form-control autocomplete" placeholder="Location: e.g. Manhattan" tabindex="1" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-lg-4">
+                                            <div class="form-group form-group-lg mb-0">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                                    </div>
+                                                    <input class="form-control datepicker" placeholder="Select date" type="text" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col-12">
+                                    <div id="collapseAdvanced" class="collapse">
+                                        <div class="row">
+                                            <div class="col-12 col-lg-4">
+                                                <div class="input-group input-group-lg mt-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><span class="fas fa-sliders-h"></span></span>
+                                                    </div>
+                                                    <select class="custom-select" id="exampleFormControlSelect1">
+                                                        <option>Type</option>
+                                                        <option>On-Demand Meeting Spaces</option>
+                                                        <option>Office Space</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-lg-4">
+                                                <div class="input-group input-group-lg mt-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><span class="fas fa-ruler-combined"></span></span>
+                                                    </div>
+                                                    <select class="custom-select" id="exampleFormControlSelect2">
+                                                        <option>Area</option>
+                                                        <option>10 Sq. Ft - 20 Sq. Ft</option>
+                                                        <option>20 Sq. Ft - 50 Sq. Ft</option>
+                                                        <option>50 Sq. Ft - 100 Sq. Ft</option>
+                                                        <option>100 Sq. Ft - 200 Sq. Ft</option>
+                                                        <option>200+ Sq. Ft</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-lg-4">
+                                                <div class="input-group input-group-lg mt-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><span class="far fa-user-circle"></span></span>
+                                                    </div>
+                                                    <select class="custom-select" id="exampleFormControlSelect3">
+                                                        <option>Team Size</option>
+                                                        <option>Any</option>
+                                                        <option>1-20</option>
+                                                        <option>21-50</option>
+                                                        <option>51-100</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-lg-4">
+                                                <div class="card border-light mt-3 p-3">
+                                                    <a href="#" data-target="#reviews" class="accordion-panel-header w-100 d-flex align-items-center justify-content-between" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="reviews">
+                                                        <span class="icon-title h6 mb-0 font-weight-bold">Rating</span>
+                                                        <span class="icon"><span class="fas fa-plus"></span></span>
+                                                    </a>
+                                                    <ul id="reviews" class="collapse list-group list-group list-group-flush pt-4 border-0">
+                                                        <li class="list-group-item border-0 py-1 pt-2 px-0 d-flex align-items-center justify-content-between">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                                                <label class="form-check-label" for="defaultCheck1">
+                                                                    <span class="d-flex">
+                                                                        <i class="star fas fa-star text-warning"></i>
+                                                                        <i class="star fas fa-star text-warning"></i>
+                                                                        <i class="star fas fa-star text-warning"></i>
+                                                                        <i class="star fas fa-star text-warning"></i>
+                                                                        <i class="star fas fa-star text-warning"></i>
+                                                                        <span class="small font-weight-normal ml-2">(12)</span>
+                                                                    </span>
+                                                                </label>
+                                                            </div>
+                                                        </li>
+                                                        <li class="list-group-item border-0 py-1 px-0 d-flex align-items-center justify-content-between">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
+                                                                <label class="form-check-label" for="defaultCheck2">
+                                                                    <span class="d-flex">
+                                                                        <i class="star fas fa-star text-warning"></i>
+                                                                        <i class="star fas fa-star text-warning"></i>
+                                                                        <i class="star fas fa-star text-warning"></i>
+                                                                        <i class="star fas fa-star text-warning"></i>
+                                                                        <i class="star far fa-star text-dark"></i>
+                                                                        <span class="small font-weight-normal ml-2">(22)</span>
+                                                                    </span>
+                                                                </label>
+                                                            </div>
+                                                        </li>
+                                                        <li class="list-group-item border-0 py-1 px-0 d-flex align-items-center justify-content-between">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck3">
+                                                                <label class="form-check-label" for="defaultCheck3">
+                                                                    <span class="d-flex">
+                                                                        <i class="star fas fa-star text-warning"></i>
+                                                                        <i class="star fas fa-star text-warning"></i>
+                                                                        <i class="star fas fa-star text-warning"></i>
+                                                                        <i class="star far fa-star text-dark"></i>
+                                                                        <i class="star far fa-star text-dark"></i>
+                                                                        <span class="small font-weight-normal ml-2">(32)</span>
+                                                                    </span>
+                                                                </label>
+                                                            </div>
+                                                        </li>
+                                                        <li class="list-group-item border-0 py-1 px-0 d-flex align-items-center justify-content-between">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck4">
+                                                                <label class="form-check-label" for="defaultCheck4">
+                                                                    <span class="d-flex">
+                                                                        <i class="star fas fa-star text-warning"></i>
+                                                                        <i class="star fas fa-star text-warning"></i>
+                                                                        <i class="star far fa-star text-dark"></i>
+                                                                        <i class="star far fa-star text-dark"></i>
+                                                                        <i class="star far fa-star text-dark"></i>
+                                                                        <span class="small font-weight-normal ml-2">(9)</span>
+                                                                    </span>
+                                                                </label>
+                                                            </div>
+                                                        </li>
+                                                        <li class="list-group-item border-0 py-1 px-0 d-flex align-items-center justify-content-between">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck5">
+                                                                <label class="form-check-label" for="defaultCheck5">
+                                                                    <span class="d-flex">
+                                                                        <i class="star fas fa-star text-warning"></i>
+                                                                        <i class="star far fa-star text-dark"></i>
+                                                                        <i class="star far fa-star text-dark"></i>
+                                                                        <i class="star far fa-star text-dark"></i>
+                                                                        <i class="star far fa-star text-dark"></i>
+                                                                        <span class="small font-weight-normal ml-2">(4)</span>
+                                                                    </span>
+                                                                </label>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-lg-4">
+                                                <div class="card border-light mt-3 p-3">
+                                                    <a href="#" data-target="#amenities-1" class="accordion-panel-header w-100 d-flex align-items-center justify-content-between" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="amenities-1">
+                                                        <span class="icon-title h6 mb-0 font-weight-bold">Amenities</span>
+                                                        <span class="icon"><i class="fas fa-plus"></i></span>
+                                                    </a>
+                                                    <ul id="amenities-1" class="collapse list-group list-group list-group-flush pt-4 border-0">
+                                                        <li class="list-group-item border-0 py-1 px-0 d-flex align-items-center justify-content-between">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck6">
+                                                                <label class="form-check-label" for="defaultCheck6">
+                                                                    Kitchen     
+                                                                </label>
+                                                            </div>
+                                                        </li>
+                                                        <li class="list-group-item border-0 py-1 px-0 d-flex align-items-center justify-content-between">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck7">
+                                                                <label class="form-check-label" for="defaultCheck7">
+                                                                    Conference Room     
+                                                                </label>
+                                                            </div>
+                                                        </li>
+                                                        <li class="list-group-item border-0 py-1 px-0 d-flex align-items-center justify-content-between">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck8">
+                                                                <label class="form-check-label" for="defaultCheck8">
+                                                                    Coffee & Drinks     
+                                                                </label>
+                                                            </div>
+                                                        </li>
+                                                        <li class="list-group-item border-0 py-1 px-0 d-flex align-items-center justify-content-between">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck9">
+                                                                <label class="form-check-label" for="defaultCheck9">
+                                                                    Bike Parking     
+                                                                </label>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-lg-4">
+                                                <div class="card border-light mt-3 p-3">
+                                                    <a href="#" data-target="#price-1" class="accordion-panel-header w-100 d-flex align-items-center justify-content-between" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="price-1">
+                                                        <span class="icon-title h6 mb-0 font-weight-bold">Price</span>
+                                                        <span class="icon"><i class="fas fa-plus"></i></span>
+                                                    </a>
+                                                    <div id="price-1" class="collapse pt-5">
+                                                        <div id="input-slider-range" data-range-value-min="100" data-range-value-max="500"></div>
+                                                        <!-- Range slider values -->
+                                                        <div class="row d-none">
+                                                            <div class="col-6">
+                                                                <span class="range-slider-value value-low" data-range-value-low="200" id="input-slider-range-value-low"></span>
+                                                            </div>
+                                                            <div class="col-6 text-right">
+                                                                <span class="range-slider-value value-high" data-range-value-high="400" id="input-slider-range-value-high"></span>
+                                                            </div>
+                                                        </div>
+                                                        <span class="font-xs small text-gray">*Prices are in USD</span>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="row align-items-center">
+                                        <div class="col-6 col-lg-4 mb-3 mb-lg-0">
+                                            <button class="btn btn-primary btn-block animate-up-2" type="submit">Find a desk</button>
+                                        </div>
+                                        <div class="col-6 col-lg-4 mb-3 mb-lg-0">
+                                            <button class="btn btn-outline-gray btn-block animate-up-2" type="reset">Reset</button>
+                                        </div>
+                                        <div class="col-12 col-lg-4">
+                                            <a href="#" data-target="#collapseAdvanced" class="accordion-panel-header d-none d-lg-block" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseAdvanced">
+                                                <span class="icon"><span class="fas fa-plus-circle"></span></span>
+                                                <span class="icon-title font-weight-normal text-gray ml-2 mb-0">Advanced Search</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div id="mapListings2"></div>
+        </div>
+    </main>
+
+    <!-- Core -->
+<script src="../vendor/jquery/dist/jquery.min.js"></script>
+<script src="../vendor/popper.js/dist/umd/popper.min.js"></script>
+<script src="../vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="../vendor/headroom.js/dist/headroom.min.js"></script>
+<script src="../vendor/onscreen/dist/on-screen.umd.min.js"></script>
+
+<!-- NoUISlider -->
+<script src="../vendor/nouislider/distribute/nouislider.min.js"></script>
+
+<!-- Bootstrap Datepicker -->
+<script src="../vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+
+<!-- jQuery Waypoints -->
+<script src="../vendor/waypoints/lib/jquery.waypoints.min.js"></script>
+
+<!-- Owl acrousel -->
+<script src="../vendor/owl.carousel/dist/owl.carousel.min.js"></script>
+
+<!-- Smooth scroll -->
+<script src="../vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
+
+<!-- Fancybox -->
+<script src="../vendor/@fancyapps/fancybox/dist/jquery.fancybox.min.js"></script>
+
+<!-- Sticky sidebar -->
+<script src="../vendor/sticky-sidebar/dist/sticky-sidebar.min.js"></script>
+
+<!-- Mapbox & Leaflet.js -->
+<script src="../vendor/leaflet/dist/leaflet.js"></script>
+
+<!-- Chartist -->
+<script src="../vendor/chartist/dist/chartist.min.js"></script>
+<script src="../vendor/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
+
+<!-- Vector Maps -->
+<script src="../vendor/jqvmap/dist/jquery.vmap.min.js"></script>
+<script src="../vendor/jqvmap/dist/maps/jquery.vmap.usa.js"></script>
+
+<!-- Sliderform -->
+<script src="../assets/js/jquery.slideform.js"></script>
+
+<!-- Spaces custom Javascript -->
+<script src="../assets/js/spaces.js"></script>
+</body>
+
+</html>
