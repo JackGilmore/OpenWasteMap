@@ -89,7 +89,7 @@
                     waste: waste
                 },
                 success: function (data) {
-                    var resultText = `<p>Your council area is <strong>${data.councilArea}</strong></p>`;
+                    var resultText = `<p>Your local authority area is <strong>${data.councilArea}</strong></p>`;
 
                     if (data.wasteOSMTag == null) {
                         resultText += `<p class="text-danger">Sorry. We don't recognise this waste type at the moment. If you know any recycling centres that take this waste type. Please <a href="#">tell us here</a>.</p>`;
@@ -97,17 +97,15 @@
                         resultText += `<p>You can dispose of ${sanitize(waste.toLowerCase())} at the following locations:</p>`;
                     }
 
-
+      
                     $.ajax({
-                        url: "https://ons-inspire.esriuk.com/arcgis/rest/services/Administrative_Boundaries/Local_Authority_Districts_December_2019_Boundaries_UK_BFC/MapServer/0/query",
-                        data: {
-                            where: `lad19cd = '${data.councilCode}'`,
-                            outSR: "4326",
-                            f: "json"
-                        }
+                        url: `/assets/geo/local-authorities/${data.councilCode}.geojson`
                     }).done(function (councilData) {
-                        var coords = L.GeoJSON.coordsToLatLngs(councilData.features[0].geometry.rings, 1);
-                        councilLayer = L.polygon(coords, { color: 'green' }).addTo(map);
+                        councilLayer = new L.GeoJSON(councilData,
+                            {
+                                style: { color: 'green', opacity: 0.5 }
+                            }).addTo(map);
+
                         map.flyToBounds(councilLayer.getBounds(),
                             {
                                 animate: true

@@ -1,5 +1,8 @@
+using System.Net.Mime;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -36,7 +39,14 @@ namespace OpenWasteMapUK
             }
 
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
+
+            var contentTypes = new FileExtensionContentTypeProvider();
+            contentTypes.Mappings.Add(".geojson","application/geo+json");
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                ContentTypeProvider = contentTypes
+            });
 
             app.UseRouting();
 
