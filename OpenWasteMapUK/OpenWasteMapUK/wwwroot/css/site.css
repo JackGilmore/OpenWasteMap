@@ -99,10 +99,6 @@ main {
     height: 100%;
 }
 
-body {
-    height: calc(100vh - 48px);
-}
-
 /*
 *  Search container
 */
