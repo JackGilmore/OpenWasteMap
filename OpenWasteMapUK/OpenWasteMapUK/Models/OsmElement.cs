@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
 
 namespace OpenWasteMapUK.Models
 {
@@ -14,6 +11,11 @@ namespace OpenWasteMapUK.Models
         public Dictionary<string,string> Tags { get; set; }
         public double Lat { get; set; }
         public double Lon { get; set; }
+        public DateTime TimeStamp { get; set; }
 
+        public OsmElement()
+        {
+            TimeStamp = DateTime.Now;
+        }
     }
 }
