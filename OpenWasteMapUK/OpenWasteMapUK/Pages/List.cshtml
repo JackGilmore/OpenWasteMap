@@ -1,0 +1,59 @@
+﻿@page
+@model OpenWasteMapUK.Pages.ListModel
+@{
+    ViewData["Title"] = "HWRC list";
+}
+
+@section parentHead
+{
+    <link rel="stylesheet" href="lib/datatables/css/dataTables.bootstrap4.min.css" />
+}
+
+<div role="main" class="container py-3">
+    <h1>@ViewData["Title"]</h1>
+    <p class="lead text-secondary">A list of HWRCs on the map</p>
+
+    <hr />
+    
+    <section class="d-flex justify-content-between">
+        <p><span class="font-weight-bold" >@Model.HWRCs.Count() HWRCs</span> on the map</p>
+        <p><span class="font-weight-bold">Last cache pull:</span> @Model.HWRCs.FirstOrDefault()?.TimeStamp.ToString("G")</p>
+    </section>
+
+    <table class="table table-bordered table-striped" id="hwrc-datatable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Local Authority (OSM owner tag)</th>
+                <th>OSM Link</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var hwrc in Model.HWRCs)
+            {
+                <tr>
+                    <td>@hwrc.Tags.GetValueOrDefault("name")</td>
+                    <td>@hwrc.Tags.GetValueOrDefault("owner")</td>
+                    <td><a href="@hwrc.OsmLink" target="_blank">@hwrc.OsmLink</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+
+@section parentScripts {
+    <script src="lib/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="lib/datatables/js/dataTables.bootstrap4.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#hwrc-datatable').DataTable({
+                "paging": false,
+                "ordering": true,
+                "order": [],
+                "info": true
+            });
+        });
+    </script>
+}

@@ -1,11 +1,12 @@
-using System.Net.Mime;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.StaticFiles;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using OpenWasteMapUK.Models;
+using OpenWasteMapUK.Repositories;
 
 namespace OpenWasteMapUK
 {
@@ -22,6 +23,11 @@ namespace OpenWasteMapUK
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")), ServiceLifetime.Transient);
+
+            services.AddScoped<IDataRepository, DataRepository>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,7 +47,7 @@ namespace OpenWasteMapUK
             app.UseHttpsRedirection();
 
             var contentTypes = new FileExtensionContentTypeProvider();
-            contentTypes.Mappings.Add(".geojson","application/geo+json");
+            contentTypes.Mappings.Add(".geojson", "application/geo+json");
 
             app.UseStaticFiles(new StaticFileOptions
             {
