@@ -362,3 +362,4 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /OpenWasteMapUK/OpenWasteMapUK/Secrets
+/OpenWasteMapUK/OpenWasteMapUK/App_Data
