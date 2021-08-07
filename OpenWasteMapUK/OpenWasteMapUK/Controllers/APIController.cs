@@ -66,14 +66,14 @@ namespace OpenWasteMapUK.Controllers
             });
         }
         [Route("GetFeatures")]
+        //[ServiceFilter(typeof(CacheCheckFilter))]
         public async Task<IActionResult> GetFeatures()
         {
             var data = await _dataRepository.GetElementsFromCache();
+            return Ok(data);
 
             // TODO: Output as GeoJson
             // TODO: Compound WikiData too if possible
-
-            return Ok(data);
         }
 
         [Route("RefreshCache")]
