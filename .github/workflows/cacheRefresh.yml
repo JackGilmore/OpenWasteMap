@@ -1,0 +1,16 @@
+name: Cache refresh
+
+# Controls when the workflow will run
+on:
+  schedule:
+    - cron:  '*/10 * * * *'
+
+  workflow_dispatch:
+
+jobs:
+  Cache_refresh:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Ping cache refresh endpoint
+        run: curl --location --request GET 'https://openwastemap.uk/api/refreshcache'
