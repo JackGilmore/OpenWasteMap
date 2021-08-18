@@ -14,7 +14,7 @@
     {
         <h2>@(string.IsNullOrEmpty(hwrc.Key) ? "Not specified 😢" : hwrc.Key)</h2>
         <ul>
-            @foreach (var element in hwrc)
+            @foreach (var element in hwrc.OrderBy(e => e.Tags.GetValueOrDefault("name")))
             {
                 <li><a href="@element.OsmLink">@element.Tags.GetValueOrDefault("name")</a></li>
             }
