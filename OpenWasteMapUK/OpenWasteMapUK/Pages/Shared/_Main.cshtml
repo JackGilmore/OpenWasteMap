@@ -21,17 +21,20 @@
         <a class="navbar-brand col-sm-3 col-md-2 mr-0" asp-page="Index">OpenWasteMap</a>
         <ul class="navbar-nav ml-2 mr-auto">
             <li class="nav-item">
-                <a class="nav-link" asp-page="Index">Map</a>
+                <a class="nav-link" asp-page="/Index">Map</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" asp-page="List">List</a>
+                <a class="nav-link" asp-page="/List">List</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" asp-page="About">About</a>
+                <a class="nav-link" asp-page="/Reports/ByLocalAuthority">By Local Authority</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" asp-page="/About">About</a>
+            </li>
+            @*<li class="nav-item">
                 <a class="nav-link" href="#">Share data</a>
-            </li>
+            </li>*@
         </ul>
     </nav>
 
