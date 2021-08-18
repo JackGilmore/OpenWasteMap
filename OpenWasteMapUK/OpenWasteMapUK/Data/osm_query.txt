@@ -1,0 +1,8 @@
+﻿[out:json][timeout:50];
+area[name="United Kingdom"];
+(
+nwr["recycling_type"="centre"]["ownership"="municipal"](area);
+);
+out meta;
+>;
+out skel qt;
