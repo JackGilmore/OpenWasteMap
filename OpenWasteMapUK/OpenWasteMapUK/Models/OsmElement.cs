@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using Newtonsoft.Json;
 
 namespace OpenWasteMapUK.Models
 {
@@ -12,6 +13,7 @@ namespace OpenWasteMapUK.Models
         public Dictionary<string, string> Tags { get; set; }
         public double Lat { get; set; }
         public double Lon { get; set; }
+        [JsonIgnore]
         public DateTime TimeStamp { get; set; }
         [NotMapped]
         public string OsmLink => $"https://openstreetmap.org/{Type}/{Id}";
