@@ -13,7 +13,7 @@ namespace OpenWasteMapUK
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Information()
                 .WriteTo.Debug()
-                .WriteTo.File("App_Data/log.txt", rollingInterval: RollingInterval.Day)
+                .WriteTo.File("App_Data/log.txt", rollingInterval: RollingInterval.Day, shared: true)
                 .CreateLogger();
 
             try

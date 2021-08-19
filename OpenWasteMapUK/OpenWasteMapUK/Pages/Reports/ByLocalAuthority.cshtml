@@ -1,0 +1,24 @@
+﻿@page
+@model OpenWasteMapUK.Pages.Reports.ByLocalAuthorityModel
+@{
+    ViewData["Title"] = "HWRCs by local authority";
+}
+
+<div role="main" class="container py-3">
+    <h1>@ViewData["Title"]</h1>
+    <p class="lead text-secondary">A list of HWRCs grouped by their local authority</p>
+
+    <hr />
+
+    @foreach (var hwrc in Model.HWRCs)
+    {
+        <h2>@(string.IsNullOrEmpty(hwrc.Key) ? "Not specified 😢" : hwrc.Key)</h2>
+        <ul>
+            @foreach (var element in hwrc.OrderBy(e => e.Tags.GetValueOrDefault("name")))
+            {
+                <li><a href="@element.OsmLink">@element.Tags.GetValueOrDefault("name")</a></li>
+            }
+        </ul>
+    }
+
+</div>
