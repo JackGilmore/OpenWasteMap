@@ -17,9 +17,14 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 flex-row">
-        <a class="navbar-brand col-sm-3 col-md-2 mr-0" asp-page="/Index">OpenWasteMap</a>
-        <ul class="navbar-nav ml-2 mr-auto">
+    <nav class="navbar navbar-expand-sm navbar-dark sticky-top bg-dark flex-md-nowrap p-0 flex-row">
+        <div class="navbar-brand d-flex justify-content-between col-sm-3 col-md-2 py-0 mr-0">
+            <a class="navbar-brand" style="background-color: transparent; box-shadow: unset;" asp-page="/Index">OpenWasteMap</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+        <ul class="navbar-nav collapse navbar-collapse flex-column flex-sm-row ml-2 mr-auto" id="navbarSupportedContent">
             <li class="nav-item">
                 <a class="nav-link" asp-page="/Index">Map</a>
             </li>
@@ -33,8 +38,8 @@
                 <a class="nav-link" asp-page="/About">About</a>
             </li>
             @*<li class="nav-item">
-                <a class="nav-link" href="#">Share data</a>
-            </li>*@
+                    <a class="nav-link" href="#">Share data</a>
+                </li>*@
         </ul>
     </nav>
 
