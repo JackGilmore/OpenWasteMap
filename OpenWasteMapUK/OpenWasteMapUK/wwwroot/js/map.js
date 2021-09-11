@@ -24,8 +24,8 @@ $("#searchSubmit").click(function () {
 // ==========
 
 function initMap() {
-    map = L.map('map').setView([55.770394, -3.339844], 6);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    map = L.map("map").setView([55.770394, -3.339844], 6);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
         {
             attribution: '&copy; <a href=\"https://openstreetmap.org\">OpenStreetMap</a> Contributors',
             maxZoom: 18,
@@ -34,8 +34,8 @@ function initMap() {
 }
 
 function initDropdown() {
-    $('#searchWaste').select2({
-        theme: 'bootstrap4',
+    $("#searchWaste").select2({
+        theme: "bootstrap4",
         placeholder: "Select a waste type",
         allowClear: true
     });
@@ -65,7 +65,7 @@ function initHWRCs() {
                     let centreProps = data[i].tags;
 
                     var acceptedMaterials = Object.keys(centreProps).filter(function (k) {
-                        return k.indexOf('recycling:') === 0 && (centreProps[k] === "yes" || centreProps[k].toLowerCase() === "no");
+                        return k.indexOf("recycling:") === 0 && (centreProps[k] === "yes" || centreProps[k].toLowerCase() === "no");
                     }).reduce(function (newData, k) {
                         newData[k] = centreProps[k];
                         return newData;
@@ -163,8 +163,8 @@ function initHWRCs() {
                             popupData += "<table style=\"width:100%\" class=\"open-time-table\">";
                             var currentDate = moment();
                             var todayNo = currentDate.day();
-                            var weekStart = currentDate.clone().startOf('isoWeek').toDate();
-                            var weekEnd = currentDate.clone().endOf('isoWeek').toDate();
+                            var weekStart = currentDate.clone().startOf("isoWeek").toDate();
+                            var weekEnd = currentDate.clone().endOf("isoWeek").toDate();
                             var weekDays = getCurrentWeek();
 
                             var openTimes = oh.getOpenIntervals(weekStart, weekEnd);
@@ -179,7 +179,7 @@ function initHWRCs() {
                                     popupData += "<tr>";
                                 }
 
-                                popupData += "<td>" + weekDays[day].format('dddd') + "</td>";
+                                popupData += "<td>" + weekDays[day].format("dddd") + "</td>";
 
                                 var dayData = findOpenTimeMatch(openTimes, weekDays[day]);
 
@@ -187,7 +187,7 @@ function initHWRCs() {
                                 if (dayData.length > 0) {
                                     popupData += "<td style=\"text-align:right\">";
                                     for (var time in dayData) {
-                                        popupData += dayData[time][0].format('HH:mm') + " - " + dayData[time][1].format('HH:mm');
+                                        popupData += dayData[time][0].format("HH:mm") + " - " + dayData[time][1].format("HH:mm");
                                         popupData += "</br>";
                                     }
                                     popupData += "</td>";
@@ -262,7 +262,7 @@ function search() {
             }).done(function (councilData) {
                 councilLayer = new L.GeoJSON(councilData,
                     {
-                        style: { color: 'green', opacity: 0.5 }
+                        style: { color: "green", opacity: 0.5 }
                     }).addTo(map);
 
                 map.flyToBounds(councilLayer.getBounds(),
@@ -282,22 +282,26 @@ function search() {
             let hwrcMatchCount = 0;
             let listText = '<ul class="list-group list-group-flush">';
 
+            debugger;
+
             HWRCLayer.eachLayer(function (layer) {
                 // TODO: Create a function for this
                 var icon = L.icon({
-                    iconUrl: '',
+                    iconUrl: "",
                     iconSize: [25, 41],
                     iconAnchor: [12, 41],
                     popupAnchor: [1, -34],
                     shadowSize: [41, 41]
                 });
-                if (layer.properties.hasOwnProperty(data.wasteOSMTag) && layer.properties[data.wasteOSMTag] === 'yes' && layer.properties.owner.includes(data.councilArea)) {
-                    icon.options.iconUrl = '/lib/leaflet/images/marker-icon-green.png';
-                    listText += `<li class="list-group-item">${layer.properties.name}</li>`;
-                    hwrcMatchCount++;
-                } else {
-                    icon.options.iconUrl = '/lib/leaflet/images/marker-icon-blue.png';
+                icon.options.iconUrl = "/lib/leaflet/images/marker-icon-blue.png";
+                if (layer.properties.hasOwnProperty(data.wasteOSMTag) && layer.properties[data.wasteOSMTag] === "yes") {
+                    if ((layer.properties.hasOwnProperty("owner") && layer.properties.owner.includes(data.councilArea)) || (layer.properties.hasOwnProperty("gssCode") && layer.properties.gssCode.includes(data.councilCode))) {
+                        icon.options.iconUrl = "/lib/leaflet/images/marker-icon-green.png";
+                        listText += `<li class="list-group-item">${layer.properties.name}</li>`;
+                        hwrcMatchCount++;
+                    }
                 }
+
                 layer.setIcon(icon);
             });
             listText += "</ul>";
@@ -351,12 +355,12 @@ function findNodeLatLng(nodeName, nodes) {
 function getCurrentWeek() {
     var currentDate = moment();
 
-    var weekStart = currentDate.clone().startOf('isoWeek');
+    var weekStart = currentDate.clone().startOf("isoWeek");
 
     var days = [];
 
     for (var i = 0; i <= 6; i++) {
-        days.push(moment(weekStart).add(i, 'days'));
+        days.push(moment(weekStart).add(i, "days"));
     }
 
     return days;
@@ -367,7 +371,7 @@ function findOpenTimeMatch(openTimes, date) {
     for (var i in openTimes) {
         var startTime = new moment(openTimes[i][0]);
         var endTime = new moment(openTimes[i][1]);
-        if (date.startOf('day').isSame(startTime.startOf('day'))) {
+        if (date.startOf("day").isSame(startTime.startOf("day"))) {
             openingData.push([new moment(openTimes[i][0]), endTime]);
         }
     }
@@ -376,13 +380,13 @@ function findOpenTimeMatch(openTimes, date) {
 
 function sanitize(string) {
     const map = {
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-        '"': '&quot;',
-        "'": '&#x27;',
-        "/": '&#x2F;',
-        "`": '&grave;'
+        '&': "&amp;",
+        '<': "&lt;",
+        '>': "&gt;",
+        '"': "&quot;",
+        "'": "&#x27;",
+        "/": "&#x2F;",
+        "`": "&grave;"
     };
     const reg = /[&<>"'/]/ig;
     return string.replace(reg, (match) => (map[match]));

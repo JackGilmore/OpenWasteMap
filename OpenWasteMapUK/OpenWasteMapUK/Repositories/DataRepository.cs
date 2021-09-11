@@ -8,8 +8,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using MoreLinq.Extensions;
 using Newtonsoft.Json;
 using OpenWasteMapUK.Models;
+using OpenWasteMapUK.Models.Postcodes.io;
+using OpenWasteMapUK.Utilities;
 using RestSharp;
 
 namespace OpenWasteMapUK.Repositories
@@ -18,7 +21,6 @@ namespace OpenWasteMapUK.Repositories
     {
         public Task<IEnumerable<OsmElement>> GetElementsFromCache();
         public Task RefreshCache();
-        public Task CacheAgeCheck();
     }
     public class DataRepository : IDataRepository
     {
@@ -66,7 +68,7 @@ namespace OpenWasteMapUK.Repositories
             }
             catch (Exception e)
             {
-                _logger.LogError(e,string.Empty);
+                _logger.LogError(e, string.Empty);
                 throw;
             }
 
@@ -81,6 +83,23 @@ namespace OpenWasteMapUK.Repositories
 
             _logger.LogInformation($"Got response back from OSM: {response.StatusCode}");
             var osmResponse = JsonConvert.DeserializeObject<OsmResponse>(response.Content);
+
+            var postCodes = osmResponse.Elements
+                .Where(x => x.Tags != null)
+                .Select(x => x.Tags.GetValueOrDefault("addr:postcode"))
+                .Where(x => !string.IsNullOrEmpty(x))
+                .Distinct();
+
+            var gssCodes = await GetGSSCodesForPostcodes(postCodes);
+
+            osmResponse.Elements.Where(x => x.Tags != null).ForEach(x =>
+            {
+                var postcode = x.Tags.GetValueOrDefault("addr:postcode");
+                if (!string.IsNullOrEmpty(postcode))
+                {
+                    x.Tags.Add("gssCode",gssCodes.GetValueOrDefault(postcode.RemoveWhitespace()));
+                }
+            });
 
             try
             {
@@ -99,7 +118,7 @@ namespace OpenWasteMapUK.Repositories
             }
         }
 
-        public async Task CacheAgeCheck()
+        private async Task CacheAgeCheck()
         {
             using var scope = _serviceScopeFactory.CreateScope();
             var db = scope.ServiceProvider.GetService<ApplicationDbContext>();
@@ -115,6 +134,31 @@ namespace OpenWasteMapUK.Repositories
             {
                 await RefreshCache();
             }
+        }
+
+        private async Task<Dictionary<string, string>> GetGSSCodesForPostcodes(IEnumerable<string> postcodes)
+        {
+            var outputDictionary = new Dictionary<string, string>();
+            var client = new RestClient("https://api.postcodes.io/postcodes?filter=codes,country");
+            foreach (var postcodeBatch in postcodes.Batch(100))
+            {
+                var request = new RestRequest(Method.POST);
+                request.AddJsonBody(new { postcodes = postcodeBatch }, "application/json");
+                IRestResponse response = await client.ExecuteAsync(request);
+
+                var decodedResponse = JsonConvert.DeserializeObject<PostcodesResponse>(response.Content);
+
+                decodedResponse.Result
+                    .Where(x => x.Result != null)
+                    .ForEach(x =>
+                        outputDictionary.Add
+                            (x.Query.RemoveWhitespace(),
+                            x.Result.Country == "England" && x.Result.Codes.AdminCounty != "E99999999"  ? x.Result.Codes.AdminCounty : x.Result.Codes.AdminDistrict
+                            )
+                        );
+            }
+
+            return outputDictionary;
         }
     }
 }

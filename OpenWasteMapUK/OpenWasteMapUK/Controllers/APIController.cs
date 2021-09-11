@@ -42,9 +42,11 @@ namespace OpenWasteMapUK.Controllers
             string councilArea;
             string councilCode;
 
+
+            // TODO: Fix all the null coalescing operators here that aren't doing anything
             var country = (postcodeData["result"]?["country"] ?? "Unknown").Value<string>();
 
-            if (country.Equals("England", StringComparison.CurrentCultureIgnoreCase))
+            if (country.Equals("England", StringComparison.CurrentCultureIgnoreCase) && postcodeData["result"]?["codes"]?["admin_county"]!.Value<string>() != "E99999999")
             {
                 councilArea = (postcodeData["result"]?["admin_county"] ?? "Unknown").Value<string>();
                 councilCode = (postcodeData["result"]?["codes"]?["admin_county"] ?? "Unknown").Value<string>();
