@@ -14,9 +14,9 @@
     <p class="lead text-secondary">A list of HWRCs on the map</p>
 
     <hr />
-    
+
     <section class="d-flex justify-content-between">
-        <p><span class="font-weight-bold" >@Model.HWRCs.Count() HWRCs</span> on the map</p>
+        <p><span class="font-weight-bold">@Model.HWRCs.Count() HWRCs</span> on the map</p>
         <p><span class="font-weight-bold">Last cache pull:</span> @Model.HWRCs.FirstOrDefault()?.TimeStamp.ToString("G")</p>
     </section>
 
@@ -24,8 +24,10 @@
         <thead>
             <tr>
                 <th>Name</th>
-                <th>Local Authority (OSM owner tag)</th>
+                <th>Local Authority</th>
                 <th>OSM Link</th>
+                <th>Open hours</th>
+                <th>Materials listed</th>
             </tr>
         </thead>
         <tbody>
@@ -35,6 +37,19 @@
                     <td>@hwrc.Tags.GetValueOrDefault("name")</td>
                     <td>@hwrc.Tags.GetValueOrDefault("owner")</td>
                     <td><a href="@hwrc.OsmLink" target="_blank">@hwrc.OsmLink</a></td>
+                    <td data-order="@hwrc.HasOpenHours">
+                        @if (hwrc.HasOpenHours)
+                        {
+                            <i aria-hidden="true" class="fas fa-check text-success" title="Yes"></i>
+                            <span class="sr-only">Yes</span>
+                        }
+                        else
+                        {
+                            <i aria-hidden="true" class="fas fa-times text-danger" title="No"></i>
+                            <span class="sr-only">No</span>
+                        }
+                    </td>
+                    <td>@hwrc.MaterialsListed</td>
                 </tr>
             }
         </tbody>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using Newtonsoft.Json;
 
 namespace OpenWasteMapUK.Models
@@ -17,6 +18,11 @@ namespace OpenWasteMapUK.Models
         public DateTime TimeStamp { get; set; }
         [NotMapped]
         public string OsmLink => $"https://openstreetmap.org/{Type}/{Id}";
+        [NotMapped]
+        public bool HasOpenHours => Tags != null && Tags.ContainsKey("opening_hours");
+
+        [NotMapped]
+        public int MaterialsListed => Tags != null ? Tags.Keys.Count(t => t.StartsWith("recycling:", StringComparison.CurrentCultureIgnoreCase)) : 0;
 
         public OsmElement()
         {
