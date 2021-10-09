@@ -1,0 +1,11 @@
+﻿@model bool
+@if (@Model)
+{
+    <i aria-hidden="true" class="fas fa-check text-success" title="Yes"></i>
+    <span class="sr-only">Yes</span>
+}
+else
+{
+    <i aria-hidden="true" class="fas fa-times text-danger" title="No"></i>
+    <span class="sr-only">No</span>
+}

@@ -23,6 +23,7 @@ namespace OpenWasteMapUK.Models
 
         [NotMapped]
         public int MaterialsListed => Tags != null ? Tags.Keys.Count(t => t.StartsWith("recycling:", StringComparison.CurrentCultureIgnoreCase)) : 0;
+        [NotMapped] public bool HasWikiData => Tags != null && Tags.ContainsKey("wikidata");
 
         public OsmElement()
         {

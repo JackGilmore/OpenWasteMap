@@ -27,6 +27,7 @@
                 <th>Local Authority</th>
                 <th>OSM Link</th>
                 <th>Open hours</th>
+                <th>Wikidata</th>
                 <th>Materials listed</th>
             </tr>
         </thead>
@@ -38,15 +39,13 @@
                     <td>@hwrc.Tags.GetValueOrDefault("owner")</td>
                     <td><a href="@hwrc.OsmLink" target="_blank">@hwrc.OsmLink</a></td>
                     <td data-order="@hwrc.HasOpenHours">
-                        @if (hwrc.HasOpenHours)
-                        {
-                            <i aria-hidden="true" class="fas fa-check text-success" title="Yes"></i>
-                            <span class="sr-only">Yes</span>
+                        @{
+                            await Html.RenderPartialAsync("_BoolYesNo",hwrc.HasOpenHours);
                         }
-                        else
-                        {
-                            <i aria-hidden="true" class="fas fa-times text-danger" title="No"></i>
-                            <span class="sr-only">No</span>
+                    </td>
+                    <td data-order="@hwrc.HasWikiData">
+                        @{
+                            await Html.RenderPartialAsync("_BoolYesNo",hwrc.HasWikiData);
                         }
                     </td>
                     <td>@hwrc.MaterialsListed</td>
