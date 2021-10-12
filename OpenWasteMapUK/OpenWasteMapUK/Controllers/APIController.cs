@@ -2,8 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 using OpenWasteMapUK.Models;
+using OpenWasteMapUK.Models.PostcodesDotIO;
 using OpenWasteMapUK.Repositories;
 using RestSharp;
 
@@ -32,27 +33,33 @@ namespace OpenWasteMapUK.Controllers
 
             var postcodeResponse = await postcodeClient.ExecuteAsync(postcodeRequest);
 
-            var postcodeData = JObject.Parse(postcodeResponse.Content);
-
             if (!postcodeResponse.IsSuccessful)
             {
-                return BadRequest((postcodeData["error"] ?? "Unknown error occurred").Value<string>());
+                return BadRequest("Unknown error occurred getting postcode data");
+            }
+
+            var postcodeData = JsonConvert.DeserializeObject<PostcodeResult>(postcodeResponse.Content);
+
+            if (!(postcodeData is { Status: 200 }))
+            {
+                return BadRequest(
+                    $"Error occurred getting postcode data. Status {postcodeData.Status}: {postcodeData.Error}");
             }
 
             string councilArea;
             string councilCode;
 
-            var country = (postcodeData["result"]?["country"] ?? "Unknown").Value<string>();
-
-            if (country.Equals("England", StringComparison.CurrentCultureIgnoreCase))
+            var country = postcodeData.Result.Country;
+            
+            if (country.Equals("England", StringComparison.CurrentCultureIgnoreCase) && postcodeData.Result.AdminCounty != null)
             {
-                councilArea = (postcodeData["result"]?["admin_county"] ?? "Unknown").Value<string>();
-                councilCode = (postcodeData["result"]?["codes"]?["admin_county"] ?? "Unknown").Value<string>();
+                councilArea = postcodeData.Result.AdminCounty;
+                councilCode = postcodeData.Result.Codes.AdminCounty;
             }
             else
             {
-                councilArea = (postcodeData["result"]?["admin_district"] ?? "Unknown").Value<string>();
-                councilCode = (postcodeData["result"]?["codes"]?["admin_district"] ?? "Unknown").Value<string>();
+                councilArea = postcodeData.Result.AdminDistrict;
+                councilCode = postcodeData.Result.Codes.AdminDistrict;
             }
 
             var wasteOSMTag = TagMappings.Values.GetValueOrDefault(waste, null);

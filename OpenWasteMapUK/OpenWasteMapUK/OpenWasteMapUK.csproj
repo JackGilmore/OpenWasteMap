@@ -29,7 +29,7 @@
 		<Folder Include="App_Data\" />
 	</ItemGroup>
 	<ItemGroup>
-		<Content Include="Data\**" CopyToPublishDirectory="PreserveNewest"/>
+		<Content Include="Data\**" CopyToPublishDirectory="PreserveNewest" />
 	</ItemGroup>
 	<ItemGroup>
 		<None Update="Data\**">
