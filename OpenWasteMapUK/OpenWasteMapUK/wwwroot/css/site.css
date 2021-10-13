@@ -24,6 +24,7 @@
     padding-top: .5rem;
     overflow-x: hidden;
     overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    max-width: 16.666667%; /* Super hacky but this prevents the sidebar content from overflowing */
 }
 
 .sidebar .nav-link {
