@@ -291,7 +291,7 @@ function search() {
                     popupAnchor: [1, -34],
                     shadowSize: [41, 41]
                 });
-                if (layer.properties.hasOwnProperty(data.wasteOSMTag) && layer.properties[data.wasteOSMTag] === 'yes' && layer.properties.owner.includes(data.councilArea)) {
+                if (layer.properties.hasOwnProperty(data.wasteOSMTag) && layer.properties[data.wasteOSMTag] === "yes" && layer.properties.hasOwnProperty("owner") && layer.properties.owner.includes(data.councilArea)) {
                     icon.options.iconUrl = '/lib/leaflet/images/marker-icon-green.png';
                     listText += `<li class="list-group-item">${layer.properties.name}</li>`;
                     hwrcMatchCount++;
