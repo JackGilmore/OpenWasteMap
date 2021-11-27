@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using OpenWasteMapUK.Models;
 using RestSharp;
+using Z.BulkOperations;
 
 namespace OpenWasteMapUK.Repositories
 {
@@ -66,7 +67,7 @@ namespace OpenWasteMapUK.Repositories
             }
             catch (Exception e)
             {
-                _logger.LogError(e,string.Empty);
+                _logger.LogError(e, string.Empty);
                 throw;
             }
 
@@ -84,11 +85,19 @@ namespace OpenWasteMapUK.Repositories
 
             try
             {
-                await db.Database.ExecuteSqlRawAsync("TRUNCATE TABLE [OsmElements];");
+                //await db.Database.ExecuteSqlRawAsync("TRUNCATE TABLE [OsmElements];");
 
-                await db.SaveChangesAsync();
+                //await db.SaveChangesAsync();
 
-                await db.OsmElements.AddRangeAsync(osmResponse.Elements);
+                var currentIds = await db.OsmElements.ToListAsync();
+
+                var oldEntries = currentIds.Where(oldEl => osmResponse.Elements.All(el => el.Id != oldEl.Id));
+
+                await db.BulkDeleteAsync(oldEntries);
+
+                await db.BulkMergeAsync(osmResponse.Elements);
+
+                //await db.OsmElements.AddRangeAsync(osmResponse.Elements);
 
                 await db.SaveChangesAsync();
             }
