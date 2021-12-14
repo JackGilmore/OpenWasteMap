@@ -84,7 +84,7 @@ namespace OpenWasteMapUK.Repositories
             _logger.LogInformation(response.Content);
             var osmResponse = JsonConvert.DeserializeObject<OsmResponse>(response.Content);
 
-            if (osmResponse.Remark.Contains("error"))
+            if (!string.IsNullOrEmpty(osmResponse.Remark) && osmResponse.Remark.Contains("error"))
             {
                 var ex = new Exception($"Cache refresh fail: {osmResponse.Remark}");
                 _logger.LogCritical(ex.Message);
