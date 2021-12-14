@@ -38,7 +38,7 @@ namespace OpenWasteMapUK.Repositories
         {
             var elements = await _dbContext.OsmElements.AsNoTracking().ToListAsync();
 
-            _ = CacheAgeCheck();
+            //_ = CacheAgeCheck();
 
             return elements;
         }
@@ -85,19 +85,11 @@ namespace OpenWasteMapUK.Repositories
 
             try
             {
-                //await db.Database.ExecuteSqlRawAsync("TRUNCATE TABLE [OsmElements];");
+                await db.Database.ExecuteSqlRawAsync("TRUNCATE TABLE [OsmElements];");
 
-                //await db.SaveChangesAsync();
+                await db.SaveChangesAsync();
 
-                var currentIds = await db.OsmElements.ToListAsync();
-
-                var oldEntries = currentIds.Where(oldEl => osmResponse.Elements.All(el => el.Id != oldEl.Id));
-
-                await db.BulkDeleteAsync(oldEntries);
-
-                await db.BulkMergeAsync(osmResponse.Elements);
-
-                //await db.OsmElements.AddRangeAsync(osmResponse.Elements);
+                await db.OsmElements.AddRangeAsync(osmResponse.Elements);
 
                 await db.SaveChangesAsync();
             }
