@@ -1,4 +1,4 @@
-﻿[out:json][timeout:50];
+﻿[out:json][timeout:120];
 area[name="United Kingdom"];
 (
 nwr["recycling_type"="centre"]["ownership"="municipal"](area);

@@ -88,7 +88,9 @@ namespace OpenWasteMapUK.Controllers
         {
             await _dataRepository.RefreshCache();
 
-            return Created(string.Empty, string.Empty);
+            var count = await _dataRepository.GetTableCount();
+
+            return Created(string.Empty, count);
         }
 
         [Route("SuggestChange")]

@@ -20,6 +20,7 @@ namespace OpenWasteMapUK.Repositories
         public Task<IEnumerable<OsmElement>> GetElementsFromCache();
         public Task RefreshCache();
         public Task CacheAgeCheck();
+        public Task<int> GetTableCount();
     }
     public class DataRepository : IDataRepository
     {
@@ -77,11 +78,18 @@ namespace OpenWasteMapUK.Repositories
             if (!response.IsSuccessful)
             {
                 _logger.LogWarning($"Cache refresh fail: {response.StatusCode} {response.Content}");
-
             }
 
             _logger.LogInformation($"Got response back from OSM: {response.StatusCode}");
+            _logger.LogInformation(response.Content);
             var osmResponse = JsonConvert.DeserializeObject<OsmResponse>(response.Content);
+
+            if (osmResponse.Remark.Contains("error"))
+            {
+                var ex = new Exception($"Cache refresh fail: {osmResponse.Remark}");
+                _logger.LogCritical(ex.Message);
+                throw ex;
+            }
 
             try
             {
@@ -117,5 +125,7 @@ namespace OpenWasteMapUK.Repositories
                 await RefreshCache();
             }
         }
+
+        public async Task<int> GetTableCount() => await _dbContext.OsmElements.CountAsync();
     }
 }
