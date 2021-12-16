@@ -13,4 +13,4 @@ jobs:
 
     steps:
       - name: Ping cache refresh endpoint
-        run: curl --insecure --location --request GET 'https://openwastemap.uk/api/refreshcache'
+        run: curl --insecure --max-time 600 --location --request GET 'https://openwastemap.uk/api/refreshcache'
