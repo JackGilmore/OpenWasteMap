@@ -28,14 +28,16 @@ namespace OpenWasteMapUK
         {
             services.AddRazorPages();
 
-            if (_environment.IsProduction() && Configuration["WEBSITE_HOSTNAME"].Contains("azurewebsites"))
-            {
-                services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(Configuration["POSTGRESQLCONNSTR_Default"]), ServiceLifetime.Transient);
-            }
-            else
-            {
-                services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")), ServiceLifetime.Transient);
-            }
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite("Data Source = database.db"), ServiceLifetime.Transient);
+
+            //if (_environment.IsProduction() && Configuration["WEBSITE_HOSTNAME"].Contains("azurewebsites"))
+            //{
+            //    services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(Configuration["POSTGRESQLCONNSTR_Default"]), ServiceLifetime.Transient);
+            //}
+            //else
+            //{
+            //    services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")), ServiceLifetime.Transient);
+            //}
 
             services.AddScoped<IDataRepository, DataRepository>();
 

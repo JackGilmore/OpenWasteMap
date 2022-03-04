@@ -93,7 +93,7 @@ namespace OpenWasteMapUK.Repositories
 
             try
             {
-                await db.Database.ExecuteSqlRawAsync("TRUNCATE TABLE [OsmElements];");
+                await db.Database.ExecuteSqlRawAsync("DELETE FROM [OsmElements];");
 
                 await db.SaveChangesAsync();
 

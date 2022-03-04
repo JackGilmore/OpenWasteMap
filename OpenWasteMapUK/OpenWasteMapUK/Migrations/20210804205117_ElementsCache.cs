@@ -11,9 +11,9 @@ namespace OpenWasteMapUK.Migrations
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Nodes = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Tags = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Type = table.Column<string>(type: "nvarchar(999)", nullable: true),
+                    Nodes = table.Column<string>(type: "nvarchar(999)", nullable: true),
+                    Tags = table.Column<string>(type: "nvarchar(999)", nullable: true),
                     Lat = table.Column<double>(type: "float", nullable: false),
                     Lon = table.Column<double>(type: "float", nullable: false)
                 },
