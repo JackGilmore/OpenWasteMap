@@ -42,10 +42,13 @@ namespace OpenWasteMapUK
                 {
                     var env = hostContext.HostingEnvironment;
 
+                    Log.Information($"Environment is {env.EnvironmentName}");
+
                     config.AddJsonFile("appsettings.json", false, true)
                         .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true, true)
-                        .AddJsonFile("Secrets/secrets.json", false, true)
-                        .AddJsonFile($"Secrets/secrets.{env.EnvironmentName}.json", true, true);
+                        .AddJsonFile("Secrets/secrets.json", true, true)
+                        .AddJsonFile($"Secrets/secrets.{env.EnvironmentName}.json", true, true)
+                        .AddEnvironmentVariables();
                 });
     }
 }

@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OpenWasteMapUK.Models;
 using OpenWasteMapUK.Repositories;
+using Serilog;
 
 namespace OpenWasteMapUK
 {
