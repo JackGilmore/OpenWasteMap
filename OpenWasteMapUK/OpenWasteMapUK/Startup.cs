@@ -28,14 +28,9 @@ namespace OpenWasteMapUK
         {
             services.AddRazorPages();
 
-            Log.Information($"Hostname is {Configuration["WEBSITE_HOSTNAME"]}");
-            Log.Information($"Conn string is {Configuration.GetConnectionString("Default")}");
-            Log.Information($"Test var pull {Configuration["POSTGRESQLCONNSTR_Default"]}");
-            Log.Information($"Test var pull 2 {Configuration["POSTGRESQLCONNSTR:Default"]}");
-
             if (_environment.IsProduction() && Configuration["WEBSITE_HOSTNAME"].Contains("azurewebsites"))
             {
-                services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("Default")), ServiceLifetime.Transient);
+                services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(Configuration["POSTGRESQLCONNSTR_Default"]), ServiceLifetime.Transient);
             }
             else
             {
@@ -47,7 +42,7 @@ namespace OpenWasteMapUK
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ApplicationDbContext context)
         {
             if (env.IsDevelopment() || env.IsStaging())
             {
@@ -58,6 +53,12 @@ namespace OpenWasteMapUK
                 app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
+
+
+                if (Configuration["AUTO_MIGRATE"] == "true")
+                {
+                    context.Database.Migrate();
+                }
             }
 
             app.UseHttpsRedirection();
