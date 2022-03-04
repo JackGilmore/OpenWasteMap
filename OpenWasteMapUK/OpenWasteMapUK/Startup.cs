@@ -13,10 +13,13 @@ namespace OpenWasteMapUK
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
+            _environment = env;
         }
+
+        private readonly IWebHostEnvironment _environment;
 
         public IConfiguration Configuration { get; }
 
@@ -25,7 +28,19 @@ namespace OpenWasteMapUK
         {
             services.AddRazorPages();
 
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")), ServiceLifetime.Transient);
+            Log.Information($"Hostname is {Configuration["WEBSITE_HOSTNAME"]}");
+            Log.Information($"Conn string is {Configuration.GetConnectionString("Default")}");
+            Log.Information($"Test var pull {Configuration["POSTGRESQLCONNSTR_Default"]}");
+            Log.Information($"Test var pull 2 {Configuration["POSTGRESQLCONNSTR:Default"]}");
+
+            if (_environment.IsProduction() && Configuration["WEBSITE_HOSTNAME"].Contains("azurewebsites"))
+            {
+                services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("Default")), ServiceLifetime.Transient);
+            }
+            else
+            {
+                services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")), ServiceLifetime.Transient);
+            }
 
             services.AddScoped<IDataRepository, DataRepository>();
 
