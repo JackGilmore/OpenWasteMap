@@ -42,7 +42,7 @@ namespace OpenWasteMapUK
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ApplicationDbContext context)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment() || env.IsStaging())
             {
@@ -57,7 +57,16 @@ namespace OpenWasteMapUK
 
                 if (Configuration["AUTO_MIGRATE"] == "true")
                 {
-                    context.Database.Migrate();
+                    Log.Information("Attempting automatic migrations...");
+                    using var scope = app.ApplicationServices.GetService<IServiceScopeFactory>()?.CreateScope();
+                    if (scope != null)
+                    {
+                        scope.ServiceProvider.GetRequiredService<ApplicationDbContext>().Database.Migrate();
+                    }
+                    else
+                    {
+                        Log.Error("Could log perform automatic migrations");
+                    }
                 }
             }
 
