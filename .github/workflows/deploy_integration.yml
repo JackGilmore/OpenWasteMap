@@ -1,0 +1,35 @@
+name: Deploy to Integration environment
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+  
+jobs:
+  deploy:
+    environment: 
+      name: Integration
+      url: https://integration.openwastemap.uk
+    runs-on: ubuntu-latest
+    env: 
+        working-directory: ./OpenWasteMapUK/OpenWasteMapUK
+    defaults:
+        run:
+            working-directory: ${{ env.working-directory }}
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 3.1.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Publish
+      run: dotnet publish -c Release --no-restore -o ./publish /p:EnvironmentName=Integration
+    - name: FTP Deploy
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      with:
+        server: ${{ secrets.ftp_server }}
+        username: ${{ secrets.ftp_user }}
+        password: ${{ secrets.ftp_password }}
+        local-dir: ${{ env.working-directory }}/publish
