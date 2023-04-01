@@ -29,7 +29,7 @@ jobs:
     - name: FTP Deploy
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
-        server: ${{ env.FTP_SERVER }}
+        server: "integration.openwastemap.uk"
         username: ${{ secrets.ftp_user }}
         password: ${{ secrets.ftp_password }}
         local-dir: ${{ env.working-directory }}/publish/
