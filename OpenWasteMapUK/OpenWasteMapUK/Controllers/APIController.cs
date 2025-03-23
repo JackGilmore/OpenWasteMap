@@ -19,6 +19,7 @@ namespace OpenWasteMapUK.Controllers
         {
             _dataRepository = dataRepository;
         }
+
         [Route("search")]
         public async Task<IActionResult> Search(string postcode, string waste)
         {
@@ -27,9 +28,8 @@ namespace OpenWasteMapUK.Controllers
                 return BadRequest("You must fill out postcode and waste type");
             }
 
-            IRestClient postcodeClient = new RestClient($"https://api.postcodes.io/postcodes/{postcode}");
-
-            IRestRequest postcodeRequest = new RestRequest();
+            var postcodeClient = new RestClient($"https://api.postcodes.io/postcodes/{postcode}");
+            var postcodeRequest = new RestRequest();
 
             var postcodeResponse = await postcodeClient.ExecuteAsync(postcodeRequest);
 
@@ -50,7 +50,7 @@ namespace OpenWasteMapUK.Controllers
             string councilCode;
 
             var country = postcodeData.Result.Country;
-            
+
             if (country.Equals("England", StringComparison.CurrentCultureIgnoreCase) && postcodeData.Result.AdminCounty != null)
             {
                 councilArea = postcodeData.Result.AdminCounty;
@@ -72,6 +72,7 @@ namespace OpenWasteMapUK.Controllers
                 wasteOSMTag
             });
         }
+
         [Route("GetFeatures")]
         //[ServiceFilter(typeof(CacheCheckFilter))]
         public async Task<IActionResult> GetFeatures()
@@ -97,15 +98,18 @@ namespace OpenWasteMapUK.Controllers
         public async Task<IActionResult> SuggestChange(string hwrcName, string hwrcText, double lat, double lng)
         {
             // LIVE
-            IRestClient client = new RestClient("https://api.openstreetmap.org/api/0.6/notes");
+            var client = new RestClient("https://api.openstreetmap.org/api/0.6/notes");
             // TEST
-            //IRestClient client = new RestClient("https://master.apis.dev.openstreetmap.org/api/0.6/notes");
-            IRestRequest request = new RestRequest(Method.POST);
+            //var client = new RestClient("https://master.apis.dev.openstreetmap.org/api/0.6/notes");
+            var request = new RestRequest
+            {
+                Method = Method.Post
+            };
             request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
             request.AddParameter("lat", lat);
             request.AddParameter("lon", lng);
             request.AddParameter("text", $"Suggested change to {hwrcName}: {hwrcText}");
-            IRestResponse response = await client.ExecuteAsync(request);
+            var response = await client.ExecuteAsync(request);
 
             if (response.IsSuccessful)
             {
