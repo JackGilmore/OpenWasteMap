@@ -50,6 +50,7 @@ namespace OpenWasteMapUK.Models
                         ? new Dictionary<string, string>()
                         : JsonConvert.DeserializeObject<Dictionary<string, string>>(v)
                 )
+                .HasColumnType("nvarchar(max)")
                 .Metadata
                 .SetValueComparer(tagsValueComparer);
         }
