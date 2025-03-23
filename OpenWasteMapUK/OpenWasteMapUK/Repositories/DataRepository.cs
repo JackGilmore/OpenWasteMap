@@ -55,15 +55,18 @@ namespace OpenWasteMapUK.Repositories
             }
 
             _logger.LogInformation("Running cache refresh...");
-            IRestClient client = new RestClient("https://overpass.kumi.systems/api/interpreter");
-            IRestRequest request = new RestRequest(Method.POST);
+            var client = new RestClient("https://overpass.kumi.systems/api/interpreter");
+            var request = new RestRequest
+            {
+                Method = Method.Post
+            };
 
             try
             {
                 var queryFilePath = Path.Combine(_webHostEnvironment.ContentRootPath, "Data", "osm_query.txt");
                 var queryFile = await File.ReadAllTextAsync(queryFilePath);
                 var encodedQuery = HttpUtility.UrlEncode(queryFile);
-                request.AddParameter("application/x-www-form-urlencoded; charset=UTF-8", $"data={encodedQuery}", ParameterType.RequestBody);
+                request.AddParameter("application/x-www-form-urlencoded", $"data={encodedQuery}", ParameterType.RequestBody);
                 _logger.LogInformation(queryFile);
             }
             catch (Exception e)
@@ -73,7 +76,7 @@ namespace OpenWasteMapUK.Repositories
             }
 
             _logger.LogInformation("Querying OSM...");
-            IRestResponse response = await client.ExecuteAsync(request);
+            var response = await client.ExecuteAsync(request);
 
             if (!response.IsSuccessful)
             {
